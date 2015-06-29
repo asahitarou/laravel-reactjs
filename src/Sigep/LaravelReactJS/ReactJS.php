@@ -69,6 +69,12 @@ class ReactJS
     private $src_files = [];
 
     /**
+     * List of source files (including React)
+     * @var array
+     */
+    private $component_file_name = null;
+
+    /**
      * @param \Illuminate\Foundation\Application $app
      */
     public function __construct($app)
@@ -117,19 +123,8 @@ class ReactJS
             $this->src[] = 'var React = window.React';
         }
 
-        foreach ($this->src_files as $path) {
-            $this->src[] = file_get_contents($this->basepath . $path);
-        }
-
-        $this->src = implode(";\n", $this->src);
-
-        if ($this->react_prefix) {
-            $this->react_prefix = "window.{$this->react_prefix}.";
-        }
-
-        if ($this->components_prefix) {
-            $this->components_prefix = "window.{$this->components_prefix}.";
-        }
+        $this->react_prefix = "window.{$this->react_prefix}.";
+        $this->components_prefix = "window.{$this->components_prefix}.";
     }
 
     /**
@@ -145,12 +140,17 @@ class ReactJS
     /**
      * Get and/or set component name
      * @param string $componentName
+     * @param string $componentFileName
      * @return string
      */
-    public function component($componentName = null)
+    public function component($componentName = null, $componentFileName = null)
     {
         if ($componentName && is_string($componentName)) {
             $this->component = $this->components_prefix . $componentName;
+        }
+
+        if ($componentFileName && is_string($componentFileName)) {
+            $this->component_file_name = $componentFileName;
         }
         
         return $this->component;
@@ -181,6 +181,9 @@ class ReactJS
         $component = $this->component;
 
         $code = $this->src;
+
+        $code .= file_get_contents($this->basepath . $this->component_file_name);
+
         $code .= "var componentFactory = $react.createFactory($component);";
 
         $code .= sprintf(
