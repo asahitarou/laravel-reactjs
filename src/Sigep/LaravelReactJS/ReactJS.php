@@ -82,11 +82,11 @@ class ReactJS
         $this->v8 = new \V8Js();
 
         $this->app = $app;
-        $this->basepath = $this->app['config']->get('laravel-reactjs::basepath');
-        $this->react_src = $this->app['config']->get('laravel-reactjs::react_src');
-        $this->src_files = $this->app['config']->get('laravel-reactjs::src_files');
-        $this->react_prefix = $this->app['config']->get('laravel-reactjs::react_prefix');
-        $this->components_prefix = $this->app['config']->get('laravel-reactjs::components_prefix');
+        $this->basepath = $this->app['config']->get('reactjs::basepath');
+        $this->react_src = $this->app['config']->get('reactjs::react_src');
+        $this->src_files = $this->app['config']->get('reactjs::src_files');
+        $this->react_prefix = $this->app['config']->get('reactjs::react_prefix');
+        $this->components_prefix = $this->app['config']->get('reactjs::components_prefix');
 
         $this->checkFiles();
         $this->prepare();
