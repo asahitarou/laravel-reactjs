@@ -88,7 +88,7 @@ class ReactJS
         $this->react_prefix = $this->app['config']->get('reactjs::react_prefix');
         $this->components_prefix = $this->app['config']->get('reactjs::components_prefix');
 
-        $this->checkFiles();
+//        $this->checkFiles();
         $this->prepare();
     }
 
