@@ -124,6 +124,7 @@ class ReactJS
         }
 
         $this->src = implode('; ', $this->src);
+        $this->src = $this->src . ';'; 
 
         if ($this->react_prefix) {
             $this->react_prefix = "window.{$this->react_prefix}.";
